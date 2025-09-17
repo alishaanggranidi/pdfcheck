@@ -14,7 +14,7 @@ class GeminiJudge:
         
         # Configure Gemini
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
         
     def create_validation_prompt(self, validation_data: Dict[str, Any]) -> str:
         """

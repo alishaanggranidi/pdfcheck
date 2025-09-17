@@ -1,16 +1,16 @@
-# PDF Validator Agent
+# PDF Validator Agent - Google ADK Version
 
-Agent PDF Validator menggunakan Google ADK dengan Gemini untuk validasi dokumen permohonan VPN. Sistem ini dapat mendeteksi jenis dokumen, memvalidasi tanda tangan, dan memberikan keputusan final dengan integrasi Langfuse untuk monitoring.
+Agent PDF Validator menggunakan Google ADK dengan Gemini 2.0 untuk validasi dokumen permohonan VPN. Sistem ini dapat mendeteksi jenis dokumen, memvalidasi tanda tangan, dan memberikan keputusan final dengan integrasi Langfuse untuk monitoring. Interface sederhana tanpa CLI untuk kemudahan penggunaan di Google ADK.
 
 ## 🚀 Fitur Utama
 
 - **Ekstraksi Konten PDF**: Membaca dan mengekstrak teks dari dokumen PDF
 - **Deteksi Jenis Dokumen**: Mengidentifikasi apakah dokumen adalah permohonan VPN baru atau perpanjangan
 - **Validasi Tanda Tangan**: Mendeteksi dan memvalidasi minimal 3 tanda tangan
-- **LLM Judge**: Menggunakan Google Gemini untuk evaluasi cerdas
+- **LLM Judge**: Menggunakan Google Gemini 2.0 untuk evaluasi cerdas
 - **Integrasi Langfuse**: Logging dan monitoring proses validasi
 - **API REST**: Endpoint untuk integrasi dengan sistem lain
-- **CLI Interface**: Command line tool untuk validasi batch
+- **Google ADK Interface**: Interface sederhana untuk Google ADK tanpa CLI
 
 ## 📋 Persyaratan Sistem
 
@@ -33,10 +33,10 @@ pip install -r requirements.txt
 
 3. **Setup environment variables**
 ```bash
-# Copy example file
-cp .env.example .env
+# Run setup script
+python setup_env.py
 
-# Edit .env file dengan API keys Anda
+# Or manually create .env file with your API keys
 GOOGLE_API_KEY=your_google_api_key_here
 LF_PUBLIC_KEY=your_langfuse_public_key
 LF_SECRET_KEY=your_langfuse_secret_key
@@ -45,12 +45,25 @@ LF_HOST=https://api.langfuse.com
 
 4. **Verifikasi instalasi**
 ```bash
-python cli_validator.py --config
+python main.py
 ```
 
 ## 🎯 Penggunaan
 
-### Command Line Interface (CLI)
+### Google ADK Interface (Recommended)
+
+**Menjalankan aplikasi:**
+```bash
+python main.py
+```
+
+Pilih opsi:
+1. **Validate Single PDF File** - Validasi file PDF tunggal
+2. **Batch Process PDF Files in Folder** - Validasi semua PDF dalam folder
+3. **Check Configuration** - Periksa konfigurasi
+4. **Exit** - Keluar
+
+### Command Line Interface (Legacy)
 
 **Validasi file tunggal:**
 ```bash
