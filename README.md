@@ -1,6 +1,6 @@
-# PDF Validator Agent - Google ADK Version
+# PDF Validator Agent - Google ADK
 
-Agent PDF Validator menggunakan Google ADK dengan Gemini 2.0 untuk validasi dokumen permohonan VPN. Sistem ini dapat mendeteksi jenis dokumen, memvalidasi tanda tangan, dan memberikan keputusan final dengan integrasi Langfuse untuk monitoring. Interface sederhana tanpa CLI untuk kemudahan penggunaan di Google ADK.
+Agent PDF Validator yang kompatibel dengan Google ADK web interface, menggunakan Google Gemini 2.0 untuk validasi dokumen permohonan VPN. Aplikasi ini dirancang khusus untuk berjalan langsung di Google ADK tanpa perlu HTML/CSS terpisah.
 
 ## 🚀 Fitur Utama
 
@@ -45,7 +45,7 @@ LF_HOST=https://api.langfuse.com
 
 4. **Verifikasi instalasi**
 ```bash
-python main.py
+python start_adk.py
 ```
 
 ## 🎯 Penggunaan
@@ -54,35 +54,43 @@ python main.py
 
 **Menjalankan aplikasi:**
 ```bash
-python main.py
+python start_adk.py
 ```
 
-Pilih opsi:
-1. **Validate Single PDF File** - Validasi file PDF tunggal
-2. **Batch Process PDF Files in Folder** - Validasi semua PDF dalam folder
-3. **Check Configuration** - Periksa konfigurasi
-4. **Exit** - Keluar
-
-### Command Line Interface (Legacy)
-
-**Validasi file tunggal:**
+**Atau untuk web interface:**
 ```bash
-python cli_validator.py document.pdf
+python run_adk.py
 ```
 
-**Validasi dengan output verbose:**
-```bash
-python cli_validator.py --verbose --detailed document.pdf
+**Gunakan functions di Google ADK:**
+```python
+from adk_web_app import validate_pdf, validate_pdf_bytes, batch_validate
+
+# Validate single PDF
+result = validate_pdf("document.pdf")
+
+# Validate PDF from bytes
+result = validate_pdf_bytes(pdf_data, "document.pdf")
+
+# Batch validate
+results = batch_validate(["doc1.pdf", "doc2.pdf"])
 ```
 
-**Validasi batch (semua PDF dalam folder):**
-```bash
-python cli_validator.py --batch folder_with_pdfs/
-```
+### File Structure
 
-**Simpan hasil ke file:**
-```bash
-python cli_validator.py --output result.json document.pdf
+```
+pdfcheck/
+├── adk_web_app.py          # Main ADK web application
+├── adk_config.py           # ADK configuration
+├── start_adk.py            # Simple ADK launcher
+├── run_adk.py              # Full ADK launcher with web interface
+├── pdf_validator_agent.py  # Core PDF validator
+├── gemini_judge.py         # Gemini 2.0 integration
+├── pdf_processor.py        # PDF processing
+├── config.py               # Configuration management
+├── langfuse_utils.py       # Langfuse integration
+├── setup_env.py            # Environment setup
+└── requirements.txt        # Dependencies
 ```
 
 ### API Server
