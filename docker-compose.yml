@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  pdf-validator:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - LF_PUBLIC_KEY=${LF_PUBLIC_KEY}
+      - LF_SECRET_KEY=${LF_SECRET_KEY}
+      - LF_HOST=${LF_HOST:-https://api.langfuse.com}
+      - APP_NAME=${APP_NAME:-PDF_Validator_Agent}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+      - ./temp:/app/temp
+      - ./output:/app/output
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a simple web interface
+  web-interface:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html
+    depends_on:
+      - pdf-validator
+    restart: unless-stopped
+    profiles:
+      - web
